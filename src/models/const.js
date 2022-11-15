@@ -1,0 +1,161 @@
+const MODELS = Object.freeze({
+    // AGENT_URL: { name: 'AGENT_URL', collection: 'agent_url' },
+    // AGENT_URL_STATS: { name: 'AGENT_URL_STATS', collection: 'agent_url_stats' },
+
+    // // asset
+    // ASSET: { name: 'ASSET', collection: 'asset' },
+    // ASSET_PACKAGE: { name: 'ASSET_PACKAGE', collection: 'asset_package' },
+    // ASSET_KIND: { name: 'ASSET_KIND', collection: 'asset_kind' },
+    // ASSET_CONFIRMATION: { name: 'ASSET_CONFIRMATION', collection: 'asset_confirmation' },
+    // ASSET_ACTION: { name: 'ASSET_ACTION', collection: 'asset_action' },
+
+    // // equipment
+    // EQUIPMENT_TYPE: { name: 'EQUIPMENT_TYPE', collection: 'equipment_type' },
+    // EQUIPMENT_STORE: { name: 'EQUIPMENT_STORE', collection: 'equipment_store' },
+    // EQUIPMENT_FORM: { name: 'EQUIPMENT_FORM', collection: 'equipment_form' },
+    // EQUIPMENT_WAREHOUSE: { name: 'EQUIPMENT_WAREHOUSE', discriminatorKey: 'WareHouse' },
+    // EQUIPMENT_BUY: { name: 'EQUIPMENT_BUY', discriminatorKey: 'Buy' },
+    // EQUIPMENT_BLOCKSTORE: { name: 'EQUIPMENT_BLOCKSTORE', discriminatorKey: 'BlockStore' },
+    // EQUIPMENT_REQUEST_FORM: { name: 'EQUIPMENT_REQUEST_FORM', discriminatorKey: 'Request' },
+    // EQUIPMENT_BUY_FORM: { name: 'EQUIPMENT_BUY_FORM', discriminatorKey: 'Buy' },
+    // EQUIPMENT_IMPORT_FORM: { name: 'EQUIPMENT_IMPORT_FORM', discriminatorKey: 'Import' },
+    // EQUIPMENT_TRANSFER_FORM: { name: 'EQUIPMENT_TRANSFER_FORM', discriminatorKey: 'Transfer' },
+    // EQUIPMENT_COUNTING_FORM: { name: 'EQUIPMENT_COUNTING_FORM', discriminatorKey: 'Counting' },
+
+    // BOOKING: { name: 'BOOKING', collection: 'booking' },
+    // BOOKING_FEE: { name: 'BOOKING_FEE', collection: 'booking_fee' },
+    // BOOKING_OVERBOOK: { name: 'BOOKING_OVERBOOK', collection: 'booking_overbook' },
+    // BOOKING_AUTO: { name: 'BOOKING_AUTO', collection: 'booking_auto' },
+    // BOOKING_REVIEW: { name: 'BOOKING_REVIEW', collection: 'booking_review' },
+    // BOOKING_REVIEW_HIDDEN: { name: 'BOOKING_REVIEW_HIDDEN', collection: 'booking_review_hidden' },
+    // BOOKING_SOURCE: { name: 'BOOKING_SOURCE', collection: 'booking_source' },
+    // BOOKING_SOURCE_GROUP: { name: 'BOOKING_SOURCE_GROUP', collection: 'booking_source_group' },
+    // RESERVATION: { name: 'RESERVATION', collection: 'reservation' },
+
+    // PAYOUT: { name: 'PAYOUT', collection: 'payout' },
+    // PAYOUT_CATEGORY: { name: 'PAYOUT_CATEGORY', collection: 'payout_category' },
+    // PAYOUT_EXPORT: { name: 'PAYOUT_EXPORT', collection: 'payout_export' },
+
+    // PAYMENT_REF: { name: 'PAYMENT_REF', collection: 'payment_ref' },
+    // PAYMENT_METHOD: { name: 'PAYMENT_METHOD', collection: 'payment_method' },
+
+    // CHAT_AUTOMATIC: { name: 'CHAT_AUTOMATIC', collection: 'chat_automatic' },
+    // CHAT_TEMPLATE: { name: 'CHAT_TEMPLATE', collection: 'chat_template' },
+    // MESSAGE: { name: 'MESSAGE', collection: 'messages' },
+    // BLOCK: { name: 'BLOCK', collection: 'block' },
+    // BLOCK_TYPE: { name: 'BLOCK_TYPE', collection: 'block_type' },
+    // BLOCK_INBOX: { name: 'BLOCK_INBOX', collection: 'block_inbox' },
+    // BLOCK_DOCUMENT: { name: 'BLOCK_DOCUMENT', collection: 'block_document' },
+    // BLOCK_SCHEDULER: { name: 'BLOCK_SCHEDULER', collection: 'block_scheduler' },
+    // BLOCK_CALENDAR: { name: 'BLOCK_CALENDAR', collection: 'block_calendar' },
+    // BLOCK_PLACE: { name: 'BLOCK_PLACE', collection: 'block_place' },
+    // BLOCK_LAYOUT: { name: 'BLOCK_LAYOUT', collection: 'block_layout' },
+    // BLOCK_LAYOUT_Y: { name: 'BLOCK_LAYOUT_Y', collection: 'block_layout_y' },
+    // BLOCK_LAYOUT_X: { name: 'BLOCK_LAYOUT_X', collection: 'block_layout_x' },
+    // BLOCK_PAYMENT: { name: 'BLOCK_LAYOUT_X', collection: 'block_layout_x' },
+    // BLOCK_DIGITIZING_APPROACH: { name: 'BLOCK_DIGITIZING_APPROACH', collection: 'block_digitizing_approach' },
+    // BLOCK_WORKING_HISTORY: { name: 'BLOCK_WORKING_HISTORY', collection: 'block_working_history' },
+    // BLOCK_FAQ: { name: 'BLOCK_FAQ', collection: 'block_faq' },
+
+    // OTT: { name: 'OTT', collection: 'ott' },
+    // OTT_MESSAGE: { name: 'OTT_MESSAGE', collection: 'ott_messages' },
+    // SMS_MESSAGE: { name: 'SMS_MESSAGE', collection: 'sms' },
+
+    // ROOM: { name: 'ROOM', collection: 'room' },
+    // ROOM_TYPE: { name: 'ROOM_TYPE', collection: 'room_type' },
+    // RATE: { name: 'RATE', collection: 'rate' },
+    // LISTING: { name: 'LISTING', collection: 'listing' },
+
+    // PRICE_HISTORY: { name: 'PRICE_HISTORY', collection: 'price_history' },
+
+    // PERFORMANCE: { name: 'PERFORMANCE', collection: 'performance' },
+
+    // NOTE: { name: 'NOTE', collection: 'note' },
+    // BLOCK_NOTE: { name: 'BLOCK_NOTE', collection: 'block_notes' },
+    // WORK_NOTE: { name: 'WORK_NOTE', collection: 'work_note' },
+
+    // TASK: { name: 'TASK', collection: 'task' },
+    // TASK_CATEGORY: { name: 'TASK_CATEGORY', collection: 'task_category' },
+
+    GUEST: { name: 'GUEST', collection: 'guest' },
+    // GUEST_BLACKLIST: { name: 'GUEST_BLACKLIST', collection: 'guest_blacklist' },
+    // GUEST_TAG: { name: 'GUEST_TAG', collection: 'guest_tag' },
+    // GUEST_ACCOUNT: { name: 'GUEST_ACCOUNT', collection: 'guest_account' },
+    // GUEST_ROOM_FAVORITE: { name: 'GUEST_ROOM_FAVORITE', collection: 'guest_room_favorite' },
+    // GUEST_IP: { name: 'GUEST_IP', collection: 'guest_ip' },
+
+    HOOK: { name: 'HOOK', collection: 'hook' },
+    // JOB_CALENDAR: { name: 'JOB_CALENDAR', collection: 'job_calendar' },
+    // JOB_CRAWLER: { name: 'JOB_CRAWLER', collection: 'job_crawler' },
+    // JOB_PRICING: { name: 'JOB_PRICING', collection: 'job_pricing' },
+    // JOB_PROMOTION: { name: 'JOB_PROMOTION', collection: 'job_promotion' },
+
+    // PROMOTION: { name: 'PROMOTION', collection: 'promotion' },
+    // PROMOTION_LOCAL: { name: 'PROMOTION_LOCAL', collection: 'promotion_local' },
+    // PROMOTION_BLOCK: { name: 'PROMOTION_BLOCK', collection: 'promotion_blocks' },
+    // PROMOTION_RULESET: { name: 'PROMOTION_RULESET', collection: 'promotion_ruleset' },
+    // PROMOTION_RULESET_BLOCK: { name: 'PROMOTION_RULESET_BLOCK', collection: 'promotion_ruleset_blocks' },
+
+    // SERVICE_FACEBOOK: { name: 'SERVICE_FACEBOOK', collection: 'service_facebook' },
+    // SERVICE_FACEBOOK_USER: { name: 'SERVICE_FACEBOOK_USER', collection: 'service_facebook_user' },
+    // SERVICE_CSV: { name: 'SERVICE_CSV', collection: 'service_csv' },
+    // SERVICE_STRINGEE: { name: 'SERVICE_STRINGEE', collection: 'service_stringee' },
+    // SERVICE_STRINGEE_USER: { name: 'SERVICE_STRINGEE_USER', collection: 'service_stringee_user' },
+    // SERVICE_ZALO_USER: { name: 'SERVICE_ZALO_USER', collection: 'zalo_users' },
+
+    USER: { name: 'USER', collection: 'user' },
+    // HOST: { name: 'HOST', collection: 'host' },
+    USER_GROUP: { name: 'USER_GROUP', collection: 'user_group' },
+    USER_DEVICE: { name: 'USER_DEVICE', collection: 'user_device' },
+    USER_LOG: { name: 'USER_LOG', collection: 'user_log' },
+    ROLE_GROUP: { name: 'ROLE_GROUP', collection: 'role_group' },
+    ROLE_PERMISSION: { name: 'ROLE_PERMISSION', collection: 'role_permissions' },
+
+    // SETTING: { name: 'SETTING', collection: 'setting' },
+    // OTA_MANAGER: { name: 'OTA_MANAGER', collection: 'ota' },
+    // OTA_PASSCODE: { name: 'OTA_PASSCODE', collection: 'ota_passcode' },
+
+    RESOURCE_UPLOADING: { name: 'RESOURCE_UPLOADING', collection: 'resource_uploading' },
+    RESOURCE_FILE: { name: 'RESOURCE_FILE', collection: 'resource_file' },
+
+    // DOOR_ACCESS_LOG: { name: 'DOOR_ACCESS_LOG', collection: 'door_access_log' },
+
+    LOC_COUNTRY: { name: 'LOC_COUNTRY', collection: 'loc_country' },
+    LOC_PROVINCE: { name: 'LOC_PROVINCE', collection: 'loc_province' },
+    LOC_DISTRICT: { name: 'LOC_DISTRICT', collection: 'loc_district' },
+    LOC_WARD: { name: 'LOC_WARD', collection: 'loc_ward' },
+    LOC_STREET: { name: 'LOC_STREET', collection: 'loc_street' },
+    LOC_ALIAS: { name: 'LOC_ALIAS', collection: 'loc_alias' },
+
+    // CTG_AMENITIES: { name: 'CTG_AMENITIES', collection: 'ctg_amenities' },
+    // CTG_AMENITIES_GROUP: { name: 'CTG_AMENITIES_GROUP', collection: 'ctg_amenities_group' },
+    // CTG_FACILITIES: { name: 'CTG_FACILITIES', collection: 'ctg_facilities' },
+    // CTG_FACILITIES_GROUP: { name: 'CTG_FACILITIES_GROUP', collection: 'ctg_facilities_group' },
+    // CTG_DOCUMENT_TYPE: { name: 'CTG_DOCUMENT_TYPE', collection: 'ctg_document_type' },
+    // CTG_PLACE: { name: 'CTG_PLACE', collection: 'ctg_place' },
+    // CTG_PLACE_TYPE: { name: 'CTG_PLACE_TYPE', collection: 'ctg_place_type' },
+    // CTG_TAG: { name: 'CTG_TAG', collection: 'ctg_tag' },
+    // CTG_CAPTION: { name: 'CTG_CAPTION', collection: 'ctg_caption' },
+    // CTG_OPERATOR: { name: 'CTG_OPERATOR', collection: 'ctg_operator' },
+    // CTG_SERVICE: { name: 'CTG_SERVICE', collection: 'ctg_service' },
+    // CTG_ROOM_TYPE: { name: 'CTG_ROOM_TYPE', collection: 'ctg_room_type' },
+    // CTG_PAYMENT_TYPE: { name: 'CTG_PAYMENT_TYPE', collection: 'ctg_payment_type' },
+    // CTG_PROPERTY_OWNER: { name: 'CTG_PROPERTY_OWNER', collection: 'ctg_property_owner' },
+    // CTG_TEMPLATE_DESCRIPTION: { name: 'CTG_TEMPLATE_DESCRIPTION', collection: 'ctg_template_description' },
+    // CTG_INVESTOR: { name: 'CTG_INVESTOR', collection: 'ctg_investor' },
+    // CTG_TEMPLATE_URL: { name: 'CTG_TEMPLATE_URL', collection: 'ctg_template_url' },
+
+    // GOOGLE_PLACE_DIRECTION: { name: 'GOOGLE_PLACE_DIRECTION', collection: 'google_place_direction' },
+    // GOOGLE_PLACE_DETAIL: { name: 'GOOGLE_PLACE_DETAIL', collection: 'google_place_detail' },
+
+    // FDKANKAN_ACCOUNT: { name: 'FDKANKAN_ACCOUNT', collection: '4dkankan_account' },
+    // FDKANKAN_CONFIG: { name: 'FDKANKAN_CONFIG', collection: '4dkankan_config' },
+    // FDKANKAN_VR: { name: 'FDKANKAN_VR', collection: '4dkankan_vr' },
+    // FDKANKAN_CAMERA: { name: 'FDKANKAN_CAMERA', collection: '4dkankan_camera' },
+
+    UI_CLIENT: { name: 'UI_CLIENT', collection: 'ui_client' },
+    // MATTERPORT_3D: { name: 'MATTERPORT_3D', collection: 'matterport_3d' },
+    // PROJECT_LAND: { name: 'PROJECT_LAND', collection: 'project_land' },
+});
+
+module.exports = MODELS;

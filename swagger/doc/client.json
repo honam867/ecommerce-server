@@ -1,0 +1,3453 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"title": "client",
+		"version": "1",
+		"description": "Response format: Models/Response"
+	},
+	"basePath": "/api/client",
+	"consumes": [
+		"application/json"
+	],
+	"produces": [
+		"application/json"
+	],
+	"tags": [],
+	"securityDefinitions": {},
+	"paths": {
+		"/search/suggestion": {
+			"get": {
+				"tags": [
+					"search"
+				],
+				"operationId": "searchRooms",
+				"summary": "Tìm kiếm danh sách phòng",
+				"description": "Tìm kiếm danh sách phòng theo tên hoặc địa chỉ",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "businessService",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "keyword",
+						"description": "keyword",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "type",
+						"description": "ID loại nhà",
+						"type": "number"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"bestMatch": {
+											"type": "array",
+											"items": {
+												"$ref": "#/definitions/SearchResult"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/search/suggestion/property": {
+			"get": {
+				"tags": [
+					"search"
+				],
+				"operationId": "searchProperties",
+				"summary": "Tìm kiếm danh sách nhà",
+				"description": "Tìm kiếm danh sách nhà theo tên hoặc địa chỉ",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "keyword",
+						"description": "keyword",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "type",
+						"description": "ID loại nhà",
+						"type": "number"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"bestMatch": {
+											"type": "array",
+											"items": {
+												"$ref": "#/definitions/SearchResult"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/search/mostsearched": {
+			"get": {
+				"tags": [
+					"search"
+				],
+				"operationId": "mostsearched",
+				"summary": "Danh sách địa điểm tìm kiếm nhiều nhất",
+				"description": "Danh sách địa điểm tìm kiếm nhiều nhất theo loại nhà hoặc tất cả",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "type",
+						"description": "ID Loại nhà",
+						"type": "number"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"mostSearched": {
+											"type": "array",
+											"items": {
+												"$ref": "#/definitions/SearchResult"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/search/tag/{slug}": {
+			"get": {
+				"tags": [
+					"search"
+				],
+				"operationId": "searchTag",
+				"summary": "Tìm tag",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "slug",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"tag": {
+											"$ref": "#/definitions/Tag"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/property": {
+			"get": {
+				"tags": [
+					"property"
+				],
+				"operationId": "getProperties",
+				"summary": "Lấy danh sách nhà",
+				"description": "Lấy danh sách nhà",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "start",
+						"default": 0,
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"type": "number",
+						"default": 10
+					},
+					{
+						"in": "query",
+						"name": "locId",
+						"description": "Id để xác định khu vực từ danh sách tìm kiếm phía trên",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "facilities",
+						"description": "Danh sách Id các tiện ích cần lọc",
+						"type": "array",
+						"items": {
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "type",
+						"description": "Loại nhà cần lọc vd chung cư hay CHDV",
+						"type": "number",
+						"enum": [
+							1,
+							2
+						]
+					},
+					{
+						"in": "query",
+						"name": "area",
+						"description": "Diện tích",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "media",
+						"description": "Dữ liệu có thể xem vr, images, videos",
+						"type": "string",
+						"enum": [
+							"vr",
+							"images",
+							"videos"
+						]
+					},
+					{
+						"in": "query",
+						"name": "businessService",
+						"description": "Loại dịch vụ bán giờ, ngày...",
+						"type": "number",
+						"enum": [
+							1,
+							2,
+							3,
+							4
+						]
+					},
+					{
+						"in": "query",
+						"name": "sort",
+						"description": "Sắp xếp",
+						"type": "string",
+						"enum": [
+							"newest",
+							"recommended"
+						]
+					},
+					{
+						"in": "query",
+						"name": "ne_lng",
+						"description": "longitude northeast",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "ne_lat",
+						"description": "latitude northeast",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "sw_lng",
+						"description": "longitude southwest",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "sw_lat",
+						"description": "latitude southwest",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "geohash",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"$ref": "#/definitions/Property"
+											}
+										},
+										"total": {
+											"type": "number"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/property/location": {
+			"get": {
+				"tags": [
+					"property"
+				],
+				"operationId": "getPropertiesLocation",
+				"summary": "Lấy danh sách tọa độ nhà",
+				"description": "Lấy danh sách tọa độ nhà",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "locId",
+						"description": "Id để xác định khu vực từ danh sách tìm kiếm phía trên",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "facilities",
+						"description": "Danh sách Id các tiện ích cần lọc",
+						"type": "array",
+						"items": {
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "type",
+						"description": "Loại nhà cần lọc vd chung cư hay CHDV",
+						"type": "number",
+						"enum": [
+							1,
+							2
+						]
+					},
+					{
+						"in": "query",
+						"name": "area",
+						"description": "Diện tích",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "media",
+						"description": "Dữ liệu có thể xem vr, images, videos",
+						"type": "string",
+						"enum": [
+							"vr",
+							"images",
+							"videos"
+						]
+					},
+					{
+						"in": "query",
+						"name": "businessService",
+						"description": "Loại dịch vụ bán giờ, ngày...",
+						"type": "number",
+						"enum": [
+							1,
+							2,
+							3,
+							4
+						]
+					},
+					{
+						"in": "query",
+						"name": "sort",
+						"description": "Sắp xếp",
+						"type": "string",
+						"enum": [
+							"newest",
+							"recommended"
+						]
+					},
+					{
+						"in": "query",
+						"name": "ne_lng",
+						"description": "longitude northeast",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "ne_lat",
+						"description": "latitude northeast",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "sw_lng",
+						"description": "longitude southwest",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "sw_lat",
+						"description": "latitude southwest",
+						"type": "number"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/property/branch": {
+			"get": {
+				"tags": [
+					"property"
+				],
+				"operationId": "getPropertiesBranch",
+				"summary": "Lấy danh sách các chi nhánh",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"$ref": "#/definitions/Property"
+										},
+										"total": {
+											"type": "number"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/property/{slug}": {
+			"get": {
+				"tags": [
+					"property"
+				],
+				"operationId": "getProperty",
+				"summary": "Chi tiết nhà",
+				"description": "Lấy thông tin chi tiết của 1 nhà",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "slug",
+						"description": "slug của 1 property",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "checkIn",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "checkOut",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "businessService",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "seoLink",
+						"type": "boolean"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"allOf": [
+										{
+											"$ref": "#/definitions/Property"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"seo": {
+													"$ref": "#/definitions/SEO"
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/property/{slug}/suggestion": {
+			"get": {
+				"tags": [
+					"property"
+				],
+				"operationId": "getPropertySuggestions",
+				"summary": "Danh sách nhà gợi ý",
+				"description": "Lấy danh sách nhà gợi ý",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "start",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"type": "number"
+					},
+					{
+						"in": "path",
+						"name": "slug",
+						"description": "slug của 1 property",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"$ref": "#/definitions/Property"
+											}
+										},
+										"total": {
+											"type": "number"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/property/{slug}/place": {
+			"get": {
+				"tags": [
+					"property"
+				],
+				"operationId": "getPropertyPlace",
+				"summary": "Danh sách địa điểm gần nhà",
+				"description": "Lấy danh sách địa điểm gần nhà",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "slug",
+						"description": "slug or id của 1 property",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"places": {
+											"type": "array",
+											"items": {
+												"$ref": "#/definitions/Place"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/property/{slug}/layout": {
+			"get": {
+				"tags": [
+					"property"
+				],
+				"operationId": "getPropertyLayout",
+				"summary": "Layout nhà",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "slug",
+						"description": "slug or id của 1 property",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"layout": {
+											"$ref": "#/definitions/Layout"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/property/room": {
+			"get": {
+				"tags": [
+					"property"
+				],
+				"operationId": "getRooms",
+				"summary": "Lấy danh sách phòng",
+				"description": "Lấy danh sách phòng",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "start",
+						"default": 0,
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"type": "number",
+						"default": 10
+					},
+					{
+						"in": "query",
+						"name": "checkIn",
+						"description": "Ngày định dạng ISOString",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "checkOut",
+						"description": "Ngày định dạng ISOString",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "locId",
+						"description": "Id để xác định khu vực từ danh sách tìm kiếm phía trên",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "property",
+						"description": "Id nhà",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "district",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "ward",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "street",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "amenities",
+						"description": "Danh sách Id các tiện nghi cần lọc",
+						"type": "array",
+						"items": {
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "type",
+						"description": "Loại nhà cần lọc vd chung cư hay CHDV",
+						"type": "number",
+						"enum": [
+							1,
+							2
+						]
+					},
+					{
+						"in": "query",
+						"name": "direction",
+						"type": "string",
+						"enum": [
+							"south",
+							"west",
+							"north",
+							"east",
+							"northeast",
+							"northwest",
+							"southeast",
+							"southwest"
+						]
+					},
+					{
+						"in": "query",
+						"name": "area",
+						"description": "Diện tích",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "media",
+						"description": "Dữ liệu có thể xem vr, images, videos",
+						"type": "string",
+						"enum": [
+							"vr",
+							"images",
+							"videos"
+						]
+					},
+					{
+						"in": "query",
+						"name": "min_price",
+						"description": "Giá tối thiểu",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "max_price",
+						"description": "Giá tối đa",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "bedroom",
+						"description": "phòng ngủ",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "bed",
+						"description": "giường ngủ",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "businessService",
+						"description": "Loại dịch vụ bán giờ, ngày...",
+						"type": "number",
+						"enum": [
+							1,
+							2,
+							3,
+							4
+						]
+					},
+					{
+						"in": "query",
+						"name": "sort",
+						"description": "Sắp xếp",
+						"type": "string",
+						"enum": [
+							"newest",
+							"recommended"
+						]
+					},
+					{
+						"in": "query",
+						"name": "ne_lng",
+						"description": "longitude northeast",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "ne_lat",
+						"description": "latitude northeast",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "sw_lng",
+						"description": "longitude southwest",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "sw_lat",
+						"description": "latitude southwest",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "tag",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "bedType",
+						"type": {
+							"oneOf": [
+								"string",
+								"number"
+							]
+						}
+					},
+					{
+						"in": "query",
+						"name": "geohash",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"$ref": "#/definitions/Room"
+											}
+										},
+										"total": {
+											"type": "number"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/property/room/location": {
+			"get": {
+				"tags": [
+					"property"
+				],
+				"operationId": "getRoomsMap",
+				"summary": "Lấy danh sách vị trí phòng",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/property/room/geo": {
+			"get": {
+				"tags": [
+					"property"
+				],
+				"operationId": "getRoomsMapGeoHash",
+				"summary": "Lấy danh sách vị trí phòng (clustering)",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "locId",
+						"description": "Id để xác định khu vực từ danh sách tìm kiếm phía trên",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "district",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "ward",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "street",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "amenities",
+						"description": "Danh sách Id các tiện nghi cần lọc",
+						"type": "array",
+						"items": {
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "type",
+						"description": "Loại nhà cần lọc vd chung cư hay CHDV",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "direction",
+						"description": "Hướng",
+						"type": "string",
+						"enum": [
+							"south",
+							"west",
+							"north",
+							"east",
+							"northeast",
+							"northwest",
+							"southeast",
+							"southwest"
+						]
+					},
+					{
+						"in": "query",
+						"name": "area",
+						"description": "Diện tích",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "media",
+						"description": "Dữ liệu có thể xem vr, images, videos",
+						"type": "string",
+						"enum": [
+							"vr",
+							"images",
+							"videos"
+						]
+					},
+					{
+						"in": "query",
+						"name": "min_price",
+						"description": "Giá tối thiểu",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "max_price",
+						"description": "Giá tối đa",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "businessService",
+						"description": "Loại dịch vụ bán giờ, ngày...",
+						"type": "number",
+						"enum": [
+							1,
+							2,
+							3,
+							4
+						]
+					},
+					{
+						"in": "query",
+						"name": "ne_lng",
+						"description": "longitude northeast",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "ne_lat",
+						"description": "latitude northeast",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "sw_lng",
+						"description": "longitude southwest",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "sw_lat",
+						"description": "latitude southwest",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "zoom",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "tag",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "bedType",
+						"type": {
+							"oneOf": [
+								"string",
+								"number"
+							]
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"type": "object",
+												"properties": {
+													"lat": {
+														"type": "number"
+													},
+													"lng": {
+														"type": "number"
+													},
+													"count": {
+														"type": "number"
+													},
+													"dataType": {
+														"type": "string"
+													},
+													"geohash": {
+														"type": "string"
+													},
+													"firstItem": {
+														"type": "string"
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/property/room/{slug}": {
+			"get": {
+				"tags": [
+					"property"
+				],
+				"operationId": "getRoom",
+				"summary": "Chi tiết phòng",
+				"description": "Lấy thông tin chi tiết của 1 phòng",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "slug",
+						"description": "slug của 1 phòng",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "businessService",
+						"description": "Loại dịch vụ bán giờ, ngày...",
+						"type": "number",
+						"enum": [
+							1,
+							2,
+							3,
+							4
+						]
+					},
+					{
+						"in": "query",
+						"name": "seoLink",
+						"type": "boolean"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"allOf": [
+										{
+											"$ref": "#/definitions/Room"
+										},
+										{
+											"type": "object",
+											"properties": {
+												"seo": {
+													"$ref": "#/definitions/SEO"
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/property/room/{slug}/suggestion": {
+			"get": {
+				"tags": [
+					"property"
+				],
+				"operationId": "getRoomSuggestions",
+				"summary": "Danh sách phòng gợi ý",
+				"description": "Lấy danh sách phòng gợi ý",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "start",
+						"type": "number"
+					},
+					{
+						"in": "path",
+						"name": "limit",
+						"type": "number"
+					},
+					{
+						"in": "path",
+						"name": "slug",
+						"description": "slug của 1 phòng",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"$ref": "#/definitions/Room"
+											}
+										},
+										"total": {
+											"type": "number"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/property/room/{slug}/price": {
+			"get": {
+				"tags": [
+					"property"
+				],
+				"operationId": "getRoomPrice",
+				"summary": "Giá phòng",
+				"description": "Giá phòng",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "slug",
+						"description": "slug của 1 phòng",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "businessService",
+						"type": "number",
+						"enum": [
+							1,
+							2,
+							3,
+							4
+						]
+					},
+					{
+						"in": "query",
+						"name": "checkIn",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "checkOut",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "rooms",
+						"type": "number"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"$ref": "#/definitions/RoomPrice"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/property/room/{slug}/available": {
+			"get": {
+				"tags": [
+					"property"
+				],
+				"operationId": "getRoomAvailable",
+				"summary": "Trạng thái phòng",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "slug",
+						"description": "slug của 1 phòng",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "businessService",
+						"type": "number",
+						"enum": [
+							1,
+							2,
+							3,
+							4
+						]
+					},
+					{
+						"in": "query",
+						"name": "checkIn",
+						"type": "string"
+					},
+					{
+						"in": "query",
+						"name": "checkOut",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"available": {
+											"$ref": "#/definitions/RoomAvailable"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/categories/propertytype": {
+			"get": {
+				"tags": [
+					"categories"
+				],
+				"operationId": "getPropertyType",
+				"summary": "Danh sách loại nhà",
+				"description": "Lấy danh sách loại nhà",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"$ref": "#/definitions/PropertyType"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/categories/facilities": {
+			"get": {
+				"tags": [
+					"categories"
+				],
+				"operationId": "getFacilities",
+				"summary": "Danh sách tiện ích",
+				"description": "Lấy danh sách tiện ích",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"type": "object"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/categories/amenities": {
+			"get": {
+				"tags": [
+					"categories"
+				],
+				"operationId": "getAmenities",
+				"summary": "Danh sách tiện nghi",
+				"description": "Lấy danh sách tiện nghi",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"type": "object"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/categories/province": {
+			"get": {
+				"tags": [
+					"categories"
+				],
+				"operationId": "getProvinces",
+				"summary": "Danh sách tỉnh / tp",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"$ref": "#/definitions/Province"
+											}
+										},
+										"total": {
+											"type": "number"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/categories/district": {
+			"get": {
+				"tags": [
+					"categories"
+				],
+				"operationId": "getDistricts",
+				"summary": "Danh sách quận huyện",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "province",
+						"description": "ID Tỉnh / Thành phố",
+						"type": "number",
+						"default": 1
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"$ref": "#/definitions/District"
+											}
+										},
+										"total": {
+											"type": "number"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/categories/ward": {
+			"get": {
+				"tags": [
+					"categories"
+				],
+				"operationId": "getWards",
+				"summary": "Danh sách xã / phường / thị trấn",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "district",
+						"description": "ID Quận / Huyện",
+						"type": "number",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"$ref": "#/definitions/Ward"
+											}
+										},
+										"total": {
+											"type": "number"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/categories/street": {
+			"get": {
+				"tags": [
+					"categories"
+				],
+				"operationId": "getStreets",
+				"summary": "Danh sách đường trong quận",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "district",
+						"description": "ID Quận / Huyện",
+						"type": "number",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"$ref": "#/definitions/Street"
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/reservation/inquiry": {
+			"post": {
+				"tags": [
+					"reservation"
+				],
+				"operationId": "postInquiry",
+				"summary": "Tạo đặt phòng, gửi yêu cầu xem nhà / phòng",
+				"description": "Đặt lịch xem phòng (nếu là book tháng) / đặt phòng (book ngày, giờ...)",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/Inquiry"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/reservation/inquiry/{id}": {
+			"get": {
+				"tags": [
+					"reservation"
+				],
+				"operationId": "getInquiryDetail",
+				"summary": "xem thông tin đặt phòng",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"type": "string",
+						"required": true
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"$ref": "#/definitions/Booking"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/reservation/guide/{id}": {
+			"get": {
+				"tags": [
+					"reservation"
+				],
+				"operationId": "getBookingGuide",
+				"summary": "xem thông tin checkin guide",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "id",
+						"type": "string",
+						"required": true
+					},
+					{
+						"in": "query",
+						"name": "roomId",
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"$ref": "#/definitions/BookingGuide"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/reservation/passport/validation": {
+			"post": {
+				"tags": [
+					"reservation"
+				],
+				"operationId": "validatePassport",
+				"summary": "Kiểm tra thông tin passport / cccd / cmnd",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"description": "guestId: ID khách hàng\n front: Ảnh mặt trước (định dạng base64) \n back: Ảnh mặt sau",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"guestId": {
+									"name": "guestId"
+								},
+								"front": {
+									"name": "front"
+								},
+								"back": {
+									"name": "back"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"$ref": "#/definitions/Guest"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/reservation/checkinData": {
+			"post": {
+				"tags": [
+					"reservation"
+				],
+				"operationId": "checkinData",
+				"summary": "Gửi thông tin checkin",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"description": "guestId: ID khách hàng\n guestData: Thông tin khách hàng điền",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"guestId": {
+									"type": "string"
+								},
+								"guestData": {
+									"$ref": "#/definitions/Guest"
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"$ref": "#/definitions/Guest"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/payment/bankInfo": {
+			"get": {
+				"tags": [
+					"payment"
+				],
+				"operationId": "bankInfo",
+				"summary": "Lấy thông tin tài khoản ngân hàng",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/payment/serviceFee": {
+			"get": {
+				"tags": [
+					"payment"
+				],
+				"operationId": "serviceFee",
+				"summary": "Lấy thông tin phí dịch vụ",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/payment/status": {
+			"get": {
+				"tags": [
+					"payment"
+				],
+				"operationId": "getPaymentStatus",
+				"summary": "Lấy thông tin trạng thái thanh toán",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/payment": {
+			"post": {
+				"tags": [
+					"payment"
+				],
+				"operationId": "createPayment",
+				"summary": "Tạo 1 đường dẫn thanh toán",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"required": true,
+						"description": "guestId: ID khách hàng\n guestData: Thông tin khách hàng điền",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"otaBookingId": {
+									"type": "string"
+								},
+								"otaName": {
+									"type": "string"
+								},
+								"bankCode": {
+									"type": "string"
+								},
+								"method": {
+									"type": "string",
+									"enum": [
+										"vnpay",
+										"momo"
+									]
+								}
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/ui/banner": {
+			"get": {
+				"tags": [
+					"UI"
+				],
+				"operationId": "getBanners",
+				"summary": "lấy danh sách banner",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {}
+						}
+					}
+				}
+			}
+		},
+		"/ui/homePage": {
+			"get": {
+				"tags": [
+					"UI"
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "propertyType",
+						"description": "ID loại nhà",
+						"type": "number",
+						"required": true
+					}
+				],
+				"operationId": "getHomepages",
+				"summary": "lấy danh sách home page cần hiển thị",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {}
+						}
+					}
+				}
+			}
+		},
+		"/geolocation": {
+			"get": {
+				"tags": [
+					"location"
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "lat",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "lng",
+						"type": "number"
+					}
+				],
+				"operationId": "getGeolocation",
+				"summary": "lấy thông tin vị trí qua ip",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"lng": {
+											"type": "number"
+										},
+										"lat": {
+											"type": "number"
+										},
+										"province": {
+											"$ref": "#/definitions/Province"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/session": {
+			"post": {
+				"tags": [
+					"User"
+				],
+				"description": "Api trả về 1 client key lưu lại và gửi kèm với headers 'client-key' theo mọi request",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"required": false,
+						"schema": {
+							"$ref": "#/definitions/Guest"
+						}
+					}
+				],
+				"operationId": "checkUserSession",
+				"summary": "lấy thông tin session",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"clientKey": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/favorite": {
+			"get": {
+				"tags": [
+					"User"
+				],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "start",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "limit",
+						"type": "number"
+					},
+					{
+						"in": "query",
+						"name": "propertyType",
+						"type": "number",
+						"description": "ID loại nhà cần lọc"
+					}
+				],
+				"operationId": "getUserFavorites",
+				"summary": "Lấy danh sách vị trí yêu thích",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"data": {
+											"type": "array",
+											"items": {
+												"type": "object"
+											}
+										},
+										"total": {
+											"type": "array"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"post": {
+				"tags": [
+					"User"
+				],
+				"description": "Nếu nhà thì gửi lên trường `propertyId`, nếu phòng thì gửi `roomTypeId`",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"required": false,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"roomTypeId": {
+									"type": "number"
+								},
+								"propertyId": {
+									"type": "number"
+								}
+							}
+						}
+					}
+				],
+				"operationId": "addUserFavorite",
+				"summary": "Thêm địa điểm yêu thích",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								}
+							}
+						}
+					}
+				}
+			},
+			"delete": {
+				"tags": [
+					"User"
+				],
+				"description": "Nếu nhà thì gửi lên trường `propertyId`, nếu phòng thì gửi `roomTypeId`",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"required": false,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"roomTypeId": {
+									"type": "number"
+								},
+								"propertyId": {
+									"type": "number"
+								}
+							}
+						}
+					}
+				],
+				"operationId": "removeUserFavorite",
+				"summary": "Xóa địa điểm yêu thích",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/web/url/resolver": {
+			"post": {
+				"tags": [
+					"Web"
+				],
+				"description": "Phân giải url",
+				"parameters": [
+					{
+						"in": "body",
+						"name": "body",
+						"required": false,
+						"schema": {
+							"type": "object",
+							"properties": {
+								"url": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				],
+				"operationId": "urlResolve",
+				"summary": "Phân giải url",
+				"responses": {
+					"200": {
+						"description": "Success",
+						"schema": {
+							"type": "object",
+							"properties": {
+								"error_code": {
+									"type": "number"
+								},
+								"data": {
+									"type": "object",
+									"properties": {
+										"businessService": {
+											"type": "number"
+										},
+										"propertyType": {
+											"$ref": "#/definitions/PropertyType"
+										},
+										"propertyTypes": {
+											"type": "array",
+											"items": {
+												"$ref": "#/definitions/PropertyType"
+											}
+										},
+										"location": {
+											"type": "object",
+											"properties": {
+												"province": {
+													"$ref": "#/definitions/Province"
+												},
+												"district": {
+													"$ref": "#/definitions/District"
+												},
+												"ward": {
+													"$ref": "#/definitions/Ward"
+												}
+											}
+										},
+										"seo": {
+											"$ref": "#/definitions/SEO"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"Response": {
+			"type": "object",
+			"properties": {
+				"error_code": {
+					"type": "integer"
+				},
+				"error_msg": {
+					"type": "string"
+				},
+				"data": {
+					"type": "object"
+				}
+			}
+		},
+		"BusinessService": {
+			"type": "number",
+			"description": "1: hour, 2: night, 3: day. 4: month",
+			"enum": [
+				1,
+				2,
+				3,
+				4
+			]
+		},
+		"SearchResult": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string",
+					"enum": [
+						"property",
+						"room",
+						"ward",
+						"province",
+						"district"
+					]
+				},
+				"displayText": {
+					"$ref": "#/definitions/LanguageText"
+				},
+				"meta": {
+					"type": "object",
+					"properties": {
+						"address": {
+							"$ref": "#/definitions/LanguageText"
+						},
+						"cover": {
+							"type": "string"
+						},
+						"displayName": {
+							"type": "string"
+						},
+						"slug": {
+							"type": "string"
+						}
+					}
+				}
+			}
+		},
+		"Room": {
+			"type": "object",
+			"properties": {
+				"available": {
+					"type": "number"
+				},
+				"description": {
+					"$ref": "#/definitions/LanguageText"
+				},
+				"displayName": {
+					"type": "string"
+				},
+				"slug": {
+					"type": "string"
+				},
+				"type": {
+					"type": "string"
+				},
+				"direction": {
+					"type": "string",
+					"enum": [
+						"south",
+						"west",
+						"north",
+						"east",
+						"northeast",
+						"northwest",
+						"southeast",
+						"southwest"
+					]
+				},
+				"occupancy": {
+					"type": "object",
+					"properties": {
+						"maxGuest": {
+							"type": "number"
+						},
+						"numberOfAdults": {
+							"type": "number"
+						},
+						"numberOfChildren": {
+							"type": "number"
+						},
+						"numberOfInfants": {
+							"type": "number"
+						},
+						"standardGuest": {
+							"type": "number"
+						}
+					}
+				},
+				"price": {
+					"type": "object",
+					"properties": {
+						"currency": {
+							"type": "string"
+						},
+						"max": {
+							"type": "number"
+						},
+						"min": {
+							"type": "number"
+						},
+						"monthly": {
+							"type": "number"
+						}
+					}
+				},
+				"info": {
+					"type": "object",
+					"properties": {
+						"area": {
+							"type": "number"
+						},
+						"bathroom": {
+							"type": "number"
+						},
+						"bed": {
+							"type": "number"
+						},
+						"bedroom": {
+							"type": "number"
+						},
+						"kitchen": {
+							"type": "number"
+						}
+					}
+				},
+				"property": {
+					"$ref": "#/definitions/Property"
+				},
+				"tags": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"images": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"source": {
+								"$ref": "#/definitions/Resource"
+							},
+							"tag": {
+								"type": "string"
+							}
+						}
+					}
+				},
+				"videos": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"source": {
+								"$ref": "#/definitions/Resource"
+							},
+							"cover": {
+								"$ref": "#/definitions/Resource"
+							},
+							"tag": {
+								"type": "string"
+							}
+						}
+					}
+				},
+				"vr": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"source": {
+								"$ref": "#/definitions/Resource"
+							},
+							"url": {
+								"type": "string"
+							},
+							"type": {
+								"type": "number",
+								"enum": [
+									1,
+									2
+								]
+							}
+						}
+					}
+				},
+				"amenities": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"images": {
+								"type": "array",
+								"items": {
+									"$ref": "#/definitions/Resource"
+								}
+							},
+							"id": {
+								"$ref": "#/definitions/Amenities"
+							}
+						}
+					}
+				}
+			}
+		},
+		"RoomBedType": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "number"
+				},
+				"slug": {
+					"type": "number"
+				},
+				"name": {
+					"$ref": "#/definitions/LanguageText"
+				}
+			}
+		},
+		"Property": {
+			"type": "object",
+			"properties": {
+				"location": {
+					"$ref": "#/definitions/GeoPoint"
+				},
+				"typeId": {
+					"$ref": "#/definitions/PropertyType"
+				},
+				"name": {
+					"type": "string"
+				},
+				"description": {
+					"$ref": "#/definitions/LanguageText"
+				},
+				"owner": {
+					"type": "string"
+				},
+				"totalFloor": {
+					"type": "number"
+				},
+				"totalRoom": {
+					"type": "number"
+				},
+				"area": {
+					"type": "number"
+				},
+				"address": {
+					"$ref": "#/definitions/LanguageText"
+				},
+				"completionTime": {
+					"type": "string"
+				},
+				"slug": {
+					"type": "string"
+				},
+				"operator": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "number"
+						},
+						"logo": {
+							"type": "string"
+						},
+						"name": {
+							"type": "string"
+						}
+					}
+				},
+				"userInCharge": {
+					"type": "object",
+					"properties": {
+						"name": {
+							"type": "string"
+						},
+						"phone": {
+							"type": "string"
+						},
+						"avatar": {
+							"$ref": "#/definitions/Resource"
+						}
+					}
+				},
+				"images": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"source": {
+								"$ref": "#/definitions/Resource"
+							},
+							"tag": {
+								"type": "string"
+							}
+						}
+					}
+				},
+				"videos": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"source": {
+								"$ref": "#/definitions/Resource"
+							},
+							"cover": {
+								"$ref": "#/definitions/Resource"
+							},
+							"tag": {
+								"type": "string"
+							}
+						}
+					}
+				},
+				"vr": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"source": {
+								"$ref": "#/definitions/Resource"
+							},
+							"url": {
+								"type": "string"
+							},
+							"type": {
+								"type": "number",
+								"enum": [
+									1,
+									2
+								]
+							}
+						}
+					}
+				},
+				"facilities": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"images": {
+								"type": "array",
+								"items": {
+									"$ref": "#/definitions/Resource"
+								}
+							},
+							"id": {
+								"$ref": "#/definitions/Amenities"
+							}
+						}
+					}
+				},
+				"roomTypes": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Room"
+					}
+				}
+			}
+		},
+		"PropertyType": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "number"
+				},
+				"name": {
+					"$ref": "#/definitions/LanguageText"
+				}
+			}
+		},
+		"Review": {
+			"type": "object",
+			"properties": {
+				"scores": {
+					"type": "string"
+				},
+				"rating": {
+					"type": "number"
+				},
+				"comments": {
+					"type": "string"
+				},
+				"createdAt": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"fullName": {
+					"type": "string"
+				}
+			}
+		},
+		"Inquiry": {
+			"type": "object",
+			"properties": {
+				"firstName": {
+					"type": "string",
+					"required": true
+				},
+				"lastName": {
+					"type": "string",
+					"required": true
+				},
+				"phone": {
+					"type": "string",
+					"required": true
+				},
+				"email": {
+					"type": "string"
+				},
+				"message": {
+					"type": "string"
+				},
+				"time": {
+					"type": "string",
+					"description": "Buổi sáng / trưa / tối (chỉ nhập nếu là đặt tháng)",
+					"enum": [
+						"morning",
+						"noon",
+						"evening"
+					]
+				},
+				"checkIn": {
+					"required": true,
+					"description": "Ngày định dạng ISOString",
+					"type": "string"
+				},
+				"checkOut": {
+					"description": "Ngày định dạng ISOString",
+					"type": "string"
+				},
+				"guests": {
+					"type": "number",
+					"description": "Số lượng khách"
+				},
+				"rooms": {
+					"type": "number",
+					"description": "Số lượng phòng"
+				},
+				"businessService": {
+					"type": "number",
+					"enum": [
+						1,
+						2,
+						3,
+						4
+					]
+				},
+				"paymentValue": {
+					"type": "string",
+					"description": "Loại phí dịch vụ (nếu có)"
+				},
+				"slug": {
+					"description": "Slug của phòng / nhà",
+					"required": true,
+					"type": "string"
+				},
+				"type": {
+					"description": "Loại nhà / phòng (áp dụng cho đặt tháng)",
+					"type": "string",
+					"enum": [
+						"room",
+						"property"
+					]
+				}
+			}
+		},
+		"Amenities": {
+			"type": "object",
+			"properties": {
+				"groupId": {
+					"type": "object",
+					"properties": {
+						"id": {
+							"type": "number"
+						},
+						"name": {
+							"$ref": "#/definitions/LanguageText"
+						}
+					}
+				},
+				"id": {
+					"type": "number"
+				},
+				"name": {
+					"$ref": "#/definitions/LanguageText"
+				}
+			}
+		},
+		"LanguageText": {
+			"type": "object",
+			"properties": {
+				"vi": {
+					"type": "string"
+				},
+				"en": {
+					"type": "string"
+				},
+				"ko": {
+					"type": "string"
+				},
+				"zh": {
+					"type": "string"
+				},
+				"ja": {
+					"type": "string"
+				}
+			}
+		},
+		"Direction": {
+			"type": "string",
+			"enum": [
+				"south",
+				"west",
+				"north",
+				"east",
+				"northeast",
+				"northwest",
+				"southeast",
+				"southwest"
+			]
+		},
+		"Resource": {
+			"type": "object",
+			"properties": {
+				"path": {
+					"type": "string"
+				},
+				"_id": {
+					"type": "string"
+				},
+				"screen": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"enum": [
+							"small",
+							"medium",
+							"large",
+							"x_large"
+						]
+					}
+				},
+				"url": {
+					"type": "object",
+					"properties": {
+						"origin": {
+							"type": "string"
+						},
+						"large": {
+							"type": "string"
+						},
+						"medium": {
+							"type": "string"
+						},
+						"small": {
+							"type": "string"
+						}
+					}
+				}
+			}
+		},
+		"Place": {
+			"type": "object",
+			"properties": {
+				"description": {
+					"$ref": "#/definitions/LanguageText"
+				},
+				"_id": {
+					"type": "string"
+				},
+				"placeId": {
+					"type": "object",
+					"properties": {
+						"name": {
+							"$ref": "#/definitions/LanguageText"
+						},
+						"location": {
+							"$ref": "#/definitions/GeoPoint"
+						},
+						"type": {
+							"type": "object",
+							"properties": {
+								"name": {
+									"$ref": "#/definitions/LanguageText"
+								},
+								"id": {
+									"type": "number"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"Layout": {
+			"type": "object",
+			"properties": {
+				"description": {
+					"$ref": "#/definitions/LanguageText"
+				},
+				"name": {
+					"type": "string"
+				},
+				"layoutY": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"layoutX": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"properties": {
+										"name": {
+											"type": "string"
+										},
+										"roomId": {
+											"type": "object",
+											"properties": {
+												"id": {
+													"type": "number"
+												},
+												"info": {
+													"type": "object",
+													"properties": {
+														"roomNo": {
+															"type": "string"
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"Guest": {
+			"type": "object",
+			"properties": {
+				"_id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"fullName": {
+					"type": "string"
+				},
+				"phone": {
+					"type": "string"
+				},
+				"email": {
+					"type": "string"
+				},
+				"address": {
+					"type": "string"
+				},
+				"passportNumber": {
+					"type": "string"
+				},
+				"dayOfBirth": {
+					"type": "string"
+				},
+				"momoId": {
+					"type": "string"
+				},
+				"gender": {
+					"type": "string",
+					"enum": [
+						"male",
+						"female",
+						"other"
+					]
+				}
+			}
+		},
+		"Booking": {
+			"type": "object",
+			"properties": {
+				"otaName": {
+					"type": "string"
+				},
+				"from": {
+					"type": "string"
+				},
+				"to": {
+					"type": "string"
+				},
+				"price": {
+					"type": "string"
+				},
+				"currency": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string"
+				},
+				"numberAdults": {
+					"type": "string"
+				},
+				"numberChilden": {
+					"type": "string"
+				},
+				"guestId": {
+					"$ref": "#/definitions/Guest"
+				},
+				"roomTypeId": {
+					"$ref": "#/definitions/Room"
+				},
+				"propertyId": {
+					"$ref": "#/definitions/Property"
+				},
+				"payment": {
+					"type": "object",
+					"properties": {
+						"amount": {
+							"type": "number"
+						},
+						"totalPaid": {
+							"type": "number"
+						},
+						"totalPrice": {
+							"type": "number"
+						}
+					}
+				}
+			}
+		},
+		"BookingGuide": {
+			"type": "object",
+			"properties": {
+				"bookingId": {
+					"type": "string"
+				},
+				"checkPassport": {
+					"type": "boolean"
+				},
+				"guest": {
+					"$ref": "#/definitions/Guest"
+				},
+				"property": {
+					"$ref": "#/definitions/Property"
+				},
+				"roomType": {
+					"$ref": "#/definitions/Room"
+				},
+				"checkin": {
+					"type": "string"
+				},
+				"checkout": {
+					"type": "string"
+				},
+				"payment": {
+					"type": "object",
+					"properties": {
+						"amount": {
+							"type": "number"
+						},
+						"totalPaid": {
+							"type": "number"
+						},
+						"totalPrice": {
+							"type": "number"
+						}
+					}
+				},
+				"otaBookingId": {
+					"type": "string"
+				},
+				"otaName": {
+					"type": "string"
+				},
+				"newGuide": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"name": {
+								"type": "string"
+							},
+							"images": {
+								"type": "array",
+								"items": {
+									"type": "string"
+								}
+							},
+							"vi": {
+								"type": "array",
+								"items": {
+									"type": "string"
+								}
+							},
+							"en": {
+								"type": "array",
+								"items": {
+									"type": "string"
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"RoomPrice": {
+			"type": "object",
+			"properties": {
+				"VAT": {
+					"type": "number"
+				},
+				"noVATPrice": {
+					"type": "number"
+				},
+				"noVATPromoPrice": {
+					"type": "number"
+				},
+				"price": {
+					"type": "number"
+				},
+				"promotionPrice": {
+					"type": "number"
+				}
+			}
+		},
+		"RoomAvailable": {
+			"type": "array",
+			"items": {
+				"type": "object",
+				"properties": {
+					"date": {
+						"type": "number"
+					},
+					"available": {
+						"type": "number"
+					},
+					"availableTime": {
+						"type": "array",
+						"items": {
+							"type": "string"
+						}
+					}
+				}
+			}
+		},
+		"GeoPoint": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string",
+					"enum": [
+						"Point"
+					]
+				},
+				"coordinates": {
+					"type": "array",
+					"items": {
+						"type": "number"
+					}
+				}
+			}
+		},
+		"GeoPolygon": {
+			"type": "object",
+			"properties": {
+				"type": {
+					"type": "string",
+					"enum": [
+						"Point"
+					]
+				},
+				"coordinates": {
+					"type": "array",
+					"items": {
+						"type": "array",
+						"items": {
+							"type": "array",
+							"items": {
+								"type": "number"
+							}
+						}
+					}
+				}
+			}
+		},
+		"Province": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "number"
+				},
+				"name": {
+					"type": "string"
+				},
+				"slug": {
+					"type": "string"
+				},
+				"countryId": {
+					"type": "string"
+				},
+				"location": {
+					"$ref": "#/definitions/GeoPoint"
+				},
+				"boundaries": {
+					"$ref": "#/definitions/GeoPolygon"
+				}
+			}
+		},
+		"District": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "number"
+				},
+				"name": {
+					"type": "string"
+				},
+				"slug": {
+					"type": "string"
+				},
+				"provinceId": {
+					"type": "string"
+				},
+				"location": {
+					"$ref": "#/definitions/GeoPoint"
+				},
+				"boundaries": {
+					"$ref": "#/definitions/GeoPolygon"
+				}
+			}
+		},
+		"Ward": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "number"
+				},
+				"name": {
+					"type": "string"
+				},
+				"fullName": {
+					"type": "string"
+				},
+				"slug": {
+					"type": "string"
+				},
+				"districId": {
+					"type": "string"
+				},
+				"location": {
+					"$ref": "#/definitions/GeoPoint"
+				},
+				"boundaries": {
+					"$ref": "#/definitions/GeoPolygon"
+				}
+			}
+		},
+		"Street": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "number"
+				},
+				"name": {
+					"type": "string"
+				},
+				"slug": {
+					"type": "string"
+				},
+				"districId": {
+					"type": "string"
+				}
+			}
+		},
+		"Tag": {
+			"type": "object",
+			"properties": {
+				"label": {
+					"type": "string"
+				},
+				"slug": {
+					"type": "string"
+				}
+			}
+		},
+		"GeoHash": {
+			"type": "object",
+			"properties": {
+				"lat": {
+					"type": "string"
+				},
+				"lng": {
+					"type": "string"
+				},
+				"count": {
+					"type": "number"
+				},
+				"dataType": {
+					"type": "string"
+				},
+				"geohash": {
+					"type": "string"
+				},
+				"items": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"slug": {
+								"type": "string"
+							},
+							"price": {
+								"type": "number"
+							}
+						}
+					}
+				}
+			}
+		},
+		"SEO": {
+			"type": "object",
+			"properties": {
+				"link": {
+					"type": "object",
+					"properties": {
+						"tags": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/Tag"
+							}
+						},
+						"types": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/RoomBedType"
+							}
+						},
+						"locations": {
+							"type": "array",
+							"items": {
+								"type": "object",
+								"properties": {
+									"count": {
+										"type": "number"
+									},
+									"type": {
+										"type": "string"
+									},
+									"data": {
+										"type": "array",
+										"items": {
+											"oneOf": [
+												{
+													"$ref": "#/definitions/Province"
+												},
+												{
+													"$ref": "#/definitions/District"
+												},
+												{
+													"$ref": "#/definitions/Ward"
+												}
+											]
+										}
+									}
+								}
+							}
+						},
+						"streets": {
+							"type": "array",
+							"items": {
+								"allOf": [
+									{
+										"type": "object",
+										"properties": {
+											"amount": {
+												"type": "string"
+											}
+										}
+									},
+									{
+										"$ref": "#/definitions/Street"
+									}
+								]
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
